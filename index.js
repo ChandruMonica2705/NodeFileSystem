@@ -23,6 +23,10 @@ app.get('/', (req, res) => {
   const now = new Date();
   const value = date.format(now, 'DD-MM-YYYY,HH-mm-ss');
 
+  if (!value) {
+    return res.status(500).send('Error generating date and time');
+  }
+
   // Modify the filePath to include the output folder
   const filePath = path.join(outputFolderPath, `${value}.txt`);
 
@@ -36,18 +40,37 @@ app.get('/', (req, res) => {
   });
 });
 
-// Define a route to read a file from the directory
-app.get('/readFile/:files', (req, res) => {
-  const filename = req.params.files;
-  const filePath = path.join(outputFolderPath, filename);
-
-  fs.readFile(filePath, 'utf-8', (err, data) => {
+// Define a route to read all files from the directory
+app.get('/getreadFiles', (req, res) => {
+  fs.readdir(outputFolderPath, (err, files) => {
     if (err) {
       console.error(err);
-      return res.status(404).send('File not found');
+      return res.status(500).send('Internal Server Error');
     }
 
-    res.status(200).send(data);
+    if (files.length === 0) {
+      return res.status(404).send('No files found in the "output" folder');
+    }
+
+    const fileContents = [];
+
+    files.forEach((filename, index, array) => {
+      const filePath = path.join(outputFolderPath, filename);
+
+      fs.readFile(filePath, 'utf-8', (err, data) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send('Internal Server Error');
+        }
+
+        fileContents.push({ filename, data });
+
+        if (index === array.length - 1) {
+          // Send the response once all files have been read
+          res.status(200).json(fileContents);
+        }
+      });
+    });
   });
 });
 
