@@ -1,0 +1,28 @@
+{
+    "collection": {
+    "info": {
+    "_postman_id": "9383132a-276c-43cd-a9b3-8a6c2517b187",
+    "name": "New Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "updatedAt": "2024-01-24T09:27:03.000Z",
+    "uid": "32502529-9383132a-276c-43cd-a9b3-8a6c2517b187",
+    "createdAt": null,
+    "lastUpdatedBy": null
+    },
+    "item": [
+    {
+    "name": "Nodejs Filesystem",
+    "id": "a89097a6-712c-4c88-be16-dfc70e82ab4c",
+    "protocolProfileBehavior": {
+    "disableBodyPruning": true
+    },
+    "request": {
+    "method": "GET",
+    "header": []
+    },
+    "response": [],
+    "uid": "32502529-a89097a6-712c-4c88-be16-dfc70e82ab4c"
+    }
+    ]
+    }
+    }
